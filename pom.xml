@@ -24,8 +24,8 @@
     <!-- ======================================================================= -->
     <parent>
         <groupId>org.apache.sling</groupId>
-        <artifactId>sling</artifactId>
-        <version>26</version>
+        <artifactId>sling-bundle-parent</artifactId>
+        <version>47</version>
         <relativePath />
     </parent>
 
@@ -34,12 +34,15 @@
     <!-- ======================================================================= -->
     <artifactId>org.apache.sling.distribution.sample</artifactId>
     <version>0.1.7-SNAPSHOT</version>
-    <packaging>bundle</packaging>
 
     <name>Apache Sling Distribution Sample</name>
     <description>
         The Apache Sling Distribution sample bundle provides a set of sample configurations and custom component implementations.
     </description>
+
+    <properties>
+        <project.build.outputTimestamp>2022-04-28T00:00:00Z</project.build.outputTimestamp>
+    </properties>
 
     <scm>
         <connection>scm:git:https://gitbox.apache.org/repos/asf/sling-org-apache-sling-distribution-sample.git</connection>
@@ -53,27 +56,12 @@
     <build>
         <plugins>
             <plugin>
-                <groupId>org.apache.felix</groupId>
-                <artifactId>maven-scr-plugin</artifactId>
+                <groupId>biz.aQute.bnd</groupId>
+                <artifactId>bnd-maven-plugin</artifactId>
             </plugin>
             <plugin>
                 <groupId>org.apache.sling</groupId>
-                <artifactId>maven-sling-plugin</artifactId>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.felix</groupId>
-                <artifactId>maven-bundle-plugin</artifactId>
-                <extensions>true</extensions>
-                <configuration>
-                    <instructions>
-                        <Bundle-SymbolicName>org.apache.sling.distribution.sample</Bundle-SymbolicName>
-                        <Sling-Initial-Content>
-                            SLING-CONTENT/libs/sling/distribution;path:=/libs/sling/distribution;overwrite:=true,
-                            SLING-CONTENT/var/sling/distribution;path:=/var/sling/distribution;overwrite:=true,
-                            SLING-CONTENT/etc/distribution;path:=/etc/distribution;overwrite:=true
-                        </Sling-Initial-Content>
-                    </instructions>
-                </configuration>
+                <artifactId>sling-maven-plugin</artifactId>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -86,16 +74,23 @@
     <!-- D E P E N D E N C I E S                                                 -->
     <!-- ======================================================================= -->
     <dependencies>
+        <!-- OSGi -->
         <dependency>
             <groupId>org.osgi</groupId>
-            <artifactId>org.osgi.core</artifactId>
+            <artifactId>osgi.core</artifactId>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.osgi</groupId>
-            <artifactId>org.osgi.compendium</artifactId>
+            <artifactId>osgi.cmpn</artifactId>
             <scope>provided</scope>
         </dependency>
+        <dependency>
+            <groupId>org.osgi</groupId>
+            <artifactId>org.osgi.annotation.versioning</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
         <dependency>
             <groupId>javax.jcr</groupId>
             <artifactId>jcr</artifactId>
