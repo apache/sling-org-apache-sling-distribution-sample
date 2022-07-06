@@ -3,6 +3,7 @@
     "name": "default",
     "type": "jcrvlt",
     "cleanupDelay": 1,
+    "package.roots": ["/content"],
     "package.filters": ["/content|-.*/excluded"],
     "useBinaryReferences": true,
     "tempFsFolder" : "/var/sling/distribution/packages"

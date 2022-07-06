@@ -3,6 +3,6 @@
 
     "name": "pubsync-scheduled-trigger",
 
-    "action": "poll",
+    "action": "pull",
     "seconds": "30"
 }

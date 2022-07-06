@@ -67,8 +67,6 @@ public class Init {
             if (serviceUser != null) {
                 AccessControlUtils.addAccessControlEntry(session, "/var/sling/distribution/packages", serviceUser.getPrincipal(), new String[]{ Privilege.JCR_ALL }, true);
                 AccessControlUtils.addAccessControlEntry(session, "/content", serviceUser.getPrincipal(), new String[]{ Privilege.JCR_ALL }, true);
-                AccessControlUtils.addAccessControlEntry(session, null, serviceUser.getPrincipal(), new String[]{ Privilege.JCR_ALL }, true);
-
             }
 
             Authorizable distributorUser = createOrGetRegularUser(userManager, distributorUserName);
@@ -80,15 +78,14 @@ public class Init {
                 AccessControlUtils.addAccessControlEntry(session, "/content", distributorUser.getPrincipal(), new String[]{ Privilege.JCR_ALL }, true);
                 AccessControlUtils.addAccessControlEntry(session, "/libs/sling/distribution", distributorUser.getPrincipal(), new String[]{ Privilege.JCR_ALL }, true);
                 AccessControlUtils.addAccessControlEntry(session, "/etc/distribution", distributorUser.getPrincipal(), new String[]{ Privilege.JCR_ALL }, true);
-
-                AccessControlUtils.addAccessControlEntry(session, null, distributorUser.getPrincipal(), new String[]{ Privilege.JCR_ALL }, true);
-
+                AccessControlUtils.addAccessControlEntry(session, "/etc/packages/sling/distribution", distributorUser.getPrincipal(), new String[]{ Privilege.JCR_ALL }, true);
             }
 
             User defaultAgentUser = createOrGetServiceUser(userManager, defaultAgentUserName);
 
             if (defaultAgentUser != null) {
                 AccessControlUtils.addAccessControlEntry(session, "/var/sling/distribution/packages", defaultAgentUser.getPrincipal(), new String[]{ Privilege.JCR_ALL }, true);
+
                 ((User) distributorUser).getImpersonation().grantImpersonation(defaultAgentUser.getPrincipal());
                 serviceUser.getImpersonation().grantImpersonation(defaultAgentUser.getPrincipal());
             }
