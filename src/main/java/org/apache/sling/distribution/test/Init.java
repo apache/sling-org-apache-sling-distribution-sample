@@ -65,8 +65,8 @@ public class Init {
             User serviceUser = createOrGetServiceUser(userManager, serviceUserName);
 
             if (serviceUser != null) {
-                AccessControlUtils.addAccessControlEntry(session, "/var/sling/distribution/packages", serviceUser.getPrincipal(), new String[]{ Privilege.JCR_ALL }, true);
-                AccessControlUtils.addAccessControlEntry(session, "/content", serviceUser.getPrincipal(), new String[]{ Privilege.JCR_ALL }, true);
+                AccessControlUtils.addAccessControlEntry(session, "/", serviceUser.getPrincipal(), new String[]{ Privilege.JCR_ALL }, true);
+                AccessControlUtils.addAccessControlEntry(session, null, serviceUser.getPrincipal(), new String[]{"jcr:namespaceManagement", "jcr:nodeTypeDefinitionManagement"}, true);
             }
 
             Authorizable distributorUser = createOrGetRegularUser(userManager, distributorUserName);
