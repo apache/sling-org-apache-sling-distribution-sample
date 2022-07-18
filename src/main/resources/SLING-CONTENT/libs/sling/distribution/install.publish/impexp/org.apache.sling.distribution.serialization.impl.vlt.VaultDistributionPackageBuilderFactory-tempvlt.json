@@ -3,5 +3,6 @@
     "name": "tempvlt",
     "type": "jcrvlt",
     "cleanupDelay" : 1,
+    "package.roots": ["/content"],
     "tempFsFolder" : "/var/sling/distribution/packages"
 }

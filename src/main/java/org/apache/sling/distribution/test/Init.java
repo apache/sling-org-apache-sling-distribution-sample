@@ -65,10 +65,9 @@ public class Init {
             User serviceUser = createOrGetServiceUser(userManager, serviceUserName);
 
             if (serviceUser != null) {
-                AccessControlUtils.addAccessControlEntry(session, "/var/sling/distribution/packages", serviceUser.getPrincipal(), new String[]{ Privilege.JCR_ALL }, true);
-                AccessControlUtils.addAccessControlEntry(session, "/content", serviceUser.getPrincipal(), new String[]{ Privilege.JCR_ALL }, true);
+                AccessControlUtils.addAccessControlEntry(session, "/", serviceUser.getPrincipal(), new String[]{ Privilege.JCR_ALL }, true);
                 AccessControlUtils.addAccessControlEntry(session, null, serviceUser.getPrincipal(), new String[]{ Privilege.JCR_ALL }, true);
-
+                AccessControlUtils.addAccessControlEntry(session, null, serviceUser.getPrincipal(), new String[]{"jcr:namespaceManagement", "jcr:nodeTypeDefinitionManagement"}, true);
             }
 
             Authorizable distributorUser = createOrGetRegularUser(userManager, distributorUserName);
@@ -76,19 +75,15 @@ public class Init {
             JcrUtils.getOrCreateByPath("/content", "sling:Folder", session);
 
             if (distributorUser != null) {
-                AccessControlUtils.addAccessControlEntry(session, "/var/sling/distribution/packages", distributorUser.getPrincipal(), new String[]{ Privilege.JCR_ALL }, true);
-                AccessControlUtils.addAccessControlEntry(session, "/content", distributorUser.getPrincipal(), new String[]{ Privilege.JCR_ALL }, true);
-                AccessControlUtils.addAccessControlEntry(session, "/libs/sling/distribution", distributorUser.getPrincipal(), new String[]{ Privilege.JCR_ALL }, true);
-                AccessControlUtils.addAccessControlEntry(session, "/etc/distribution", distributorUser.getPrincipal(), new String[]{ Privilege.JCR_ALL }, true);
-
+                AccessControlUtils.addAccessControlEntry(session, "/", distributorUser.getPrincipal(), new String[]{ Privilege.JCR_ALL }, true);
                 AccessControlUtils.addAccessControlEntry(session, null, distributorUser.getPrincipal(), new String[]{ Privilege.JCR_ALL }, true);
-
             }
 
             User defaultAgentUser = createOrGetServiceUser(userManager, defaultAgentUserName);
 
-            if (defaultAgentUser != null) {
+            if (defaultAgentUser != null && serviceUser != null && distributorUser != null) {
                 AccessControlUtils.addAccessControlEntry(session, "/var/sling/distribution/packages", defaultAgentUser.getPrincipal(), new String[]{ Privilege.JCR_ALL }, true);
+
                 ((User) distributorUser).getImpersonation().grantImpersonation(defaultAgentUser.getPrincipal());
                 serviceUser.getImpersonation().grantImpersonation(defaultAgentUser.getPrincipal());
             }
